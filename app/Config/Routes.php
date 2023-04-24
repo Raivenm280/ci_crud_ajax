@@ -46,6 +46,13 @@ $routes->setAutoRoute(false);
 // $routes->post('post/update', 'PostController::update');
 
 $routes->get('/campus', 'CampusController::index');
+$routes->post('campus/table', 'CampusController::table');
+$routes->post('campus/getModal', 'CampusController::getModal');
+$routes->post('campus/saveData', 'CampusController::saveData');
+
+
+
+
 $routes->post('campus/add', 'CampusController::add');
 $routes->get('campus/fetch', 'CampusController::fetch');
 $routes->post('campus/edit/', 'CampusController::edit');

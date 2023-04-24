@@ -28,6 +28,51 @@ class CampusController extends BaseController
         ]);
         return;
     }
+
+    public function table(){
+        $db = Database::connect();
+        $builder = $db->table('campus');
+        $query   = $builder->get();
+        $campus = $query->getResult();
+        $data['record'] = $campus;
+        
+        return view('setup/campus_table', $data);
+    }
+
+    public function getModal()
+    {
+        $data = array();
+
+        $request = \Config\Services::request();
+        $formFields = $request->getPost();
+        
+        if ($formFields['uid'] != "add") {
+            // $data['record'] = DB::table('branches')->where('id', $formFields['uid'])->get();
+            // $data = $data['record'][0];
+            // $data = json_decode(json_encode($data), true);
+
+            $db = Database::connect();
+            $builder = $db->table('campus')->where('id', $formFields['uid']);
+            $query   = $builder->get();
+            $data = $query->getResult();
+        }
+
+        $data['uid'] = $formFields['uid'];
+        // echo "<pre>";
+        // print_r($data);
+        // die;
+        return view('setup/campus_manage', $data);
+    }
+
+    public function saveData(){
+        $request = \Config\Services::request();
+        $formFields = $request->getPost();
+
+        echo "<pre>";
+        print_r($formFields);
+        die;
+    }
+
     public function fetch()
     {
         $db= Database::connect();
