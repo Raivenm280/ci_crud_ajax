@@ -113,6 +113,90 @@
                 }
             });
         });
+
+        $("#show_campus_table").on("click", ".editCampus", function() {
+            var uid = $(this).attr('uid');
+            $.ajax({
+                type: "POST",
+                url: '<?= base_url('campus/getModal') ?>',
+                data: {
+                    uid: uid
+                },
+                success: function(response) {
+                    $("#myModal").modal('toggle');
+                    $("#modal_title").text("Edit Campus");
+                    $("#modal-content").html(response);
+                }
+            });
+        });
+
+        $("#show_campus_table").on("click", ".deleteCampus", function() {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, proceed!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    var uid = $(this).attr('uid');
+                    $.ajax({
+                        type: "POST",
+                        url: '<?= base_url('campus/deleteData') ?>',
+                        data: {
+                            uid: uid
+                        },
+                        success: function(response) {
+                            if (response.status == 1) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: response.title,
+                                    text: response.msg,
+                                    timer: 2000
+                                })
+                                CampusTable();
+                            } else if (response.status == 2) {
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: response.title,
+                                    text: response.msg
+                                })
+                            } else if (response.status == 0) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: response.title,
+                                    text: response.msg
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: "System Error",
+                                    text: "Please contact developer."
+                                })
+                            }
+                        }
+                    });
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Data is safe.',
+                        'error'
+                    )
+                }
+            })
+        });
     </script>
 
 </body>

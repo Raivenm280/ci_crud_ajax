@@ -49,6 +49,7 @@ $routes->get('/campus', 'CampusController::index');
 $routes->post('campus/table', 'CampusController::table');
 $routes->post('campus/getModal', 'CampusController::getModal');
 $routes->post('campus/saveData', 'CampusController::saveData');
+$routes->post('campus/deleteData', 'CampusController::deleteData');
 
 
 

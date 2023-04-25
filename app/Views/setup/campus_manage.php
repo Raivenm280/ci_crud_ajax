@@ -4,7 +4,7 @@
         <label>Code<span class="text-danger">*</span></label>
         <div class="input-group">
             <div class="input-group-text"><i class="bi bi-pencil-fill"></i></div>
-            <input type="text" id="code" name="code" class="form-control validate" placeholder="Enter Code" required value="">
+            <input type="text" id="code" name="code" class="form-control validate" placeholder="Enter Code" required value="<?php echo (isset($code)) ? $code : "" ?>">
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -18,7 +18,7 @@
         <label>Campus Name<span class="text-danger">*</span></label>
         <div class="input-group">
             <div class="input-group-text"><i class="bi bi-pencil-fill"></i></div>
-            <input type="text" id="campus_name" name="campus_name" class="form-control validate" placeholder="Enter Name" required value="">
+            <input type="text" id="campus_name" name="campus_name" class="form-control validate" placeholder="Enter Name" required value="<?php echo (isset($campus_name)) ? $campus_name : "" ?>">
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -32,7 +32,7 @@
         <label>Location<span class="text-danger">*</span></label>
         <div class="input-group">
             <div class="input-group-text"><i class="bi bi-pencil-fill"></i></div>
-            <input type="text" id="location" name="location" class="form-control validate" placeholder="Enter Location" required value="">
+            <input type="text" id="location" name="location" class="form-control validate" placeholder="Enter Location" required value="<?php echo (isset($location)) ? $location : "" ?>">
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -45,9 +45,7 @@
 </form>
 
 <script>
-    
     $("#savemodal").unbind("click").click(function() {
-        console.log("wew");
         var formdata = $("#campusForm").serialize();
 
         swal.fire({
@@ -70,8 +68,8 @@
                         text: response.msg,
                         timer: 2000
                     })
-                    $("#modal-view").modal("hide");
-                    BranchList();
+                    $("#myModal").modal("hide");
+                    CampusTable();
                 } else if (response.status == 2) {
                     Swal.fire({
                         icon: 'info',
