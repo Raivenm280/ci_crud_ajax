@@ -45,6 +45,7 @@
 </form>
 
 <script>
+    
     $("#savemodal").unbind("click").click(function() {
         console.log("wew");
         var formdata = $("#campusForm").serialize();
@@ -92,5 +93,7 @@
                 }
             }
         });
+
+
     });
 </script>

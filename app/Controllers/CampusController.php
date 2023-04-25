@@ -65,12 +65,25 @@ class CampusController extends BaseController
     }
 
     public function saveData(){
+        $return  = array('status' => 0,'title' => "Error", 'msg' => "Server Error");
         $request = \Config\Services::request();
         $formFields = $request->getPost();
+        unset($formFields['uid']);
+        if($formFields['code'] == ""){
+            $return  = array('status' => 2, 'title' => "Info", 'msg' => "Code is required");
+            return $this->response->setJSON($return);
+        }
 
-        echo "<pre>";
-        print_r($formFields);
-        die;
+        $db = Database::connect();
+        $builder = $db->table('campus');
+        $queryChecker = $builder->insert($formFields);
+        if($queryChecker){
+            $return  = array('status' => 1, 'title' => "Success", 'msg' => "Added campus data");
+        }else{
+            $return  = array('status' => 0, 'title' => "Error", 'msg' => "Database Error");
+        }
+
+        return $this->response->setJSON($return);
     }
 
     public function fetch()
